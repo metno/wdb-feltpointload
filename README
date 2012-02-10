@@ -1,0 +1,28 @@
+============================================================
+WDB - Water and Weather Database System
+============================================================
+
+Norwegian Meteorological Institute (met.no)
+Box 43 Blindern
+0313 OSLO
+NORWAY
+
+email: wdb@met.no
+
+WDB is a database system for storage and retrieval of weather and 
+water observations and forecasts. It handles both gridded data
+(raster) and point data.
+
+feltPointLoad is a loading program used to load ipoint data from 
+met.no FELT files into WDB database.
+
+
+Make sure that your development environment is properly set.
+If not, try using something like this:
+export WDB_LIBS=<some-local-path>
+export LIBRARY_PATH=$WDB_LIBS/lib
+export C_INCLUDE_PATH=$WDB_LIBS/include/
+export CPLUS_INCLUDE_PATH=$WDB_LIBS/include/
+export LD_LIBRARY_PATH=$WDB_LIBS/lib
+export wdbload_CFLAGS=-I$WDB_LIBS/include
+export wdbload_LIBS=-lwdbLoad
