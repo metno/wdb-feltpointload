@@ -23,7 +23,7 @@ wdblib_PROGRAMS = feltPointLoad
 AM_CXXFLAGS =			-DSYSCONFDIR=\"$(pkgsysconfdir)\" $(wdb_CFLAGS)
 	
 feltPointLoad_LDADD = $(wdb_LIBS) \
-				      -lwdbLoad -lwdbConfig -lwdbProj -lwdbExcept -lwdbLog -lwdbMath
+				      -lwdbLoad -lwdbConfig -lwdbProj -lwdbExcept -lwdbLog -lwdbMath -lfimex
 
 
 SED_SUBSTITUTION = 		sed s/__WDB_VERSION__/$(WDB_VERSION)/g $<\
