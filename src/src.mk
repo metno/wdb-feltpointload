@@ -16,6 +16,8 @@ feltPointLoad_SOURCES =  src/main.cpp \
 					     src/FeltGridDefinition.cpp \
 					     src/FeltGridDefinition.h \
 					     src/FeltLoadConfiguration.cpp \
-					     src/FeltLoadConfiguration.h
+					     src/FeltLoadConfiguration.h \
+						 src/FeltConfigFile.cpp \
+						 src/FeltConfigFile.h
 	
 EXTRA_DIST +=		src/src.mk

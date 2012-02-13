@@ -24,3 +24,6 @@ src/.deps/
 src/.dirstamp
 test/.deps/
 test/.dirstamp
+feltPointLoad
+doc/man/feltLoad.1
+
