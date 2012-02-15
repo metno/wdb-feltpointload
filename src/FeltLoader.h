@@ -80,7 +80,7 @@ namespace felt {
         void load(const felt::FeltField & field, const std::string& placename, boost::shared_ptr<MetNoFimex::CDMInterpolator>& interpolator);
 
 //        void getValues(std::vector<float> & out, const FeltField & field);
-        void getValuesForLevel(const felt::FeltField& field,boost::shared_ptr<MetNoFimex::CDMInterpolator>& pReader, std::string& varName, std::string& varUnit, size_t level, std::vector<float> & out);
+        void getValuesForLevel(const felt::FeltField& field, boost::shared_ptr<MetNoFimex::CDMInterpolator>& pReader, std::string& varName, std::string& varUnit, size_t level, std::vector<float> & out);
 	std::string dataProviderName( const FeltField & field );
 //	std::string placeName( const FeltField & field );
 	boost::posix_time::ptime referenceTime(const FeltField & field);

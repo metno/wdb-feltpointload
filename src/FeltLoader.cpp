@@ -85,7 +85,7 @@ namespace {
 
     path getConfigFile( const path & fileName )
     {
-        static const path sysConfDir = SYSCONFDIR;
+        static const path sysConfDir = "./etc/";//SYSCONFDIR;
         path confPath = sysConfDir/fileName;
         return confPath;
     }
@@ -130,10 +130,23 @@ namespace felt
         WDB_LOG & log = WDB_LOG::getInstance( "wdb.feltLoad.load.file" );
         log.debugStream() << file.information();
 
-        if(not feltConfiguration_.FeltLoading().fimexReaderConfig.empty())
+        std::string feltFileName = file.fileName().native_file_string();
+        std::string fimexCfgFileName = getConfigFile("fimexreader.conf").native_file_string();
+
+        if(not feltConfiguration_.FeltLoading().fimexReaderConfig.empty()) {
+            std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
             cdmReader_ = MetNoFimex::CDMFileReaderFactory::create(MIFI_FILETYPE_FELT, file.fileName().native_file_string(), feltConfiguration_.FeltLoading().fimexReaderConfig);
-        else
-            cdmReader_ = MetNoFimex::CDMFileReaderFactory::create(MIFI_FILETYPE_FELT, file.fileName().native_file_string(), getConfigFile("fimexreader.conf").native_file_string());
+            std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
+        } else {
+            std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": "<< feltFileName << "    " << fimexCfgFileName <<std::endl;
+            cdmReader_ =
+                    MetNoFimex::CDMFileReaderFactory::create(MIFI_FILETYPE_FELT,
+                                                             feltFileName,
+                                                             fimexCfgFileName);
+            std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
+        }
+
+        std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
 
         std::list<std::string> placenames = felt2StationAdditions_.keys();
         std::list<std::string>::const_iterator pit;

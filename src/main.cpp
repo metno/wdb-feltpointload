@@ -37,6 +37,7 @@
 
 // FIMEX
 #include <fimex/CDM.h>
+#include <fimex/CDMFileReaderFactory.h>
 
 // WDB
 //
@@ -87,35 +88,38 @@ namespace
 
 int main(int argc, char ** argv)
 {
-    FeltLoadConfiguration conf;
-    try {
-        conf.parse( argc, argv );
+    boost::shared_ptr<MetNoFimex::CDMReader> reader =
+            MetNoFimex::CDMFileReaderFactory::create(MIFI_FILETYPE_FELT, "flth00.dat", "felt2nc_variables.xml");
 
-        if(conf.general().help) {
-            help( conf.shownOptions(), cout );
-            return 0;
-    	}
+//    FeltLoadConfiguration conf;
+//    try {
+//        conf.parse( argc, argv );
 
-        if(conf.general().version) {
-            version( cout );
-            return 0;
-    	}
-    } catch(exception& e) {
-        cerr << e.what() << endl;
-        help(conf.shownOptions(), clog);
-        return 1;
-    }
+//        if(conf.general().help) {
+//            help( conf.shownOptions(), cout );
+//            return 0;
+//    	}
 
-    wdb::WdbLogHandler logHandler(conf.logging().loglevel, conf.logging().logfile);
-    WDB_LOG & log = WDB_LOG::getInstance( "wdb.feltload.main" );
-    log.debug( "Starting feltLoad" );
+//        if(conf.general().version) {
+//            version( cout );
+//            return 0;
+//    	}
+//    } catch(exception& e) {
+//        cerr << e.what() << endl;
+//        help(conf.shownOptions(), clog);
+//        return 1;
+//    }
 
-    // Get list of files
-    const vector<string> & file = conf.input().file;
-    vector<boost::filesystem::path> files;
-    copy(file.begin(), file.end(), back_inserter(files));
+//    wdb::WdbLogHandler logHandler(conf.logging().loglevel, conf.logging().logfile);
+//    WDB_LOG & log = WDB_LOG::getInstance( "wdb.feltload.main" );
+//    log.debug( "Starting feltLoad" );
 
-    try {
+//    // Get list of files
+//    const vector<string> & file = conf.input().file;
+//    vector<boost::filesystem::path> files;
+//    copy(file.begin(), file.end(), back_inserter(files));
+
+//    try {
 //        if(conf.output().list) {
 //            // List contents of files
 //            for (vector<boost::filesystem::path>::const_iterator it = files.begin(); it != files.end(); ++ it)
@@ -133,22 +137,28 @@ int main(int argc, char ** argv)
 //                }
 //            }
 //        } else {
-            // Write Files into Database
-            wdb::load::LoaderDatabaseConnection dbConnection(conf);
-            felt::FeltLoader loader(dbConnection, conf, logHandler);
-            for(vector<boost::filesystem::path>::const_iterator it = files.begin(); it != files.end(); ++ it)
-            {
-                try {
-                    felt::FeltFile feltFile(* it);
-                    loader.load(feltFile);
-                } catch (exception& e) {
-                    log.errorStream() << "Unable to load file " << it->native_file_string();
-                    log.errorStream() << "Reason: " << e.what();
-                }
-            }
+//            // Write Files into Database
+//            std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
+//            wdb::load::LoaderDatabaseConnection dbConnection(conf);
+//            std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
+//            felt::FeltLoader loader(dbConnection, conf, logHandler);
+//            std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
+//            for(vector<boost::filesystem::path>::const_iterator it = files.begin(); it != files.end(); ++ it)
+//            {
+//                try {
+//                    std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
+//                    felt::FeltFile feltFile(* it);
+//                    std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": LOADING : "<< feltFile.fileName() <<std::endl;
+//                    loader.load(feltFile);
+//                    std::cerr<<__FILE__<<"|"<<__FUNCTION__<<"|"<<__LINE__<<": CHECK"<<std::endl;
+//                } catch (exception& e) {
+//                    log.errorStream() << "Unable to load file " << it->native_file_string();
+//                    log.errorStream() << "Reason: " << e.what();
+//                }
+//            }
 //        }
-    } catch(std::exception& e) {
-        log.fatalStream() << e.what();
-        return 1;
-    }
+//    } catch(std::exception& e) {
+//        log.fatalStream() << e.what();
+//        return 1;
+//    }
 }
